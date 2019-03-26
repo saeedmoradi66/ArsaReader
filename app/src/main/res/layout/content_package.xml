@@ -13,11 +13,17 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/White"
+        android:background="@color/layout_back"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".activity.PackageActivity"
         tools:showIn="@layout/app_bar_package">
-
+        <ListView
+            android:id="@+id/lv_package"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="@android:color/transparent"
+            android:layout_marginTop="7dp"
+            android:dividerHeight="7dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
