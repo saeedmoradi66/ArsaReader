@@ -54,7 +54,7 @@ public class PackageActivity extends AppCompatActivity implements NavigationView
             public void onClick(View view) {
                 Intent intent = new Intent(PackageActivity.this, UserPackageActivity.class);
                 startActivity(intent);
-                finish();
+
             }
         });
     }

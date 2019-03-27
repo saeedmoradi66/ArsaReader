@@ -45,8 +45,8 @@ public class UserPackageActivity extends AppCompatActivity implements Navigation
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        Intent intent = getIntent();
-        List_fill(Integer.parseInt(intent.getStringExtra("categoryID")));
+
+        List_fill(1);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +54,7 @@ public class UserPackageActivity extends AppCompatActivity implements Navigation
             public void onClick(View view) {
                 Intent intent = new Intent(UserPackageActivity.this, UserPackageActivity.class);
                 startActivity(intent);
-                finish();
+
             }
         });
     }
