@@ -39,11 +39,11 @@ public class package_adapter extends ArrayAdapter<PackageModel> {
 
         Typeface titletypeface = Typeface.createFromAsset(context.getAssets(), "fonts/Vazir-Light-FD.otf");
         titleText.setTypeface(titletypeface);
-        titleText.setText(_Data.get(position).PackageTitle);
+        titleText.setText(_Data.get(position).packageTitle);
 
         Typeface pricetypeface = Typeface.createFromAsset(context.getAssets(), "fonts/Vazir-Light-FD.otf");
         priceText.setTypeface(pricetypeface);
-        priceText.setText(_Data.get(position).Price+" ریال ");
+        priceText.setText(_Data.get(position).price+" ریال ");
 
         return rowView;
 
