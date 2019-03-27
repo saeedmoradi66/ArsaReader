@@ -20,7 +20,7 @@
         tools:showIn="@layout/app_bar_user_book">
 
         <ListView
-            android:id="@+id/lv_package"
+            android:id="@+id/lv_book"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginTop="7dp"

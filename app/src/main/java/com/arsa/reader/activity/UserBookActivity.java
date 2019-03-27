@@ -12,8 +12,8 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
-import com.arsa.reader.adapter.package_adapter;
-import com.arsa.reader.model.PackageModel;
+import com.arsa.reader.adapter.book_adapter;
+import com.arsa.reader.model.BookModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -45,8 +45,8 @@ public class UserBookActivity extends AppCompatActivity implements NavigationVie
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-
-        List_fill(1);
+        Intent intent = getIntent();
+        List_fill(Integer.parseInt(intent.getStringExtra("packageID")));
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,20 +61,22 @@ public class UserBookActivity extends AppCompatActivity implements NavigationVie
 
     public void List_fill(int id) {
         final Activity context = this;
-        AndroidNetworking.get(getString(R.string.server_url) + "/Package/GetByUserID/{id}")
+        AndroidNetworking.get(getString(R.string.server_url) + "/Book/GetByPackageID/{id}")
                 .addPathParameter("id", String.valueOf(id))
                 .setTag(this)
                 .setPriority(Priority.HIGH)
                 .build()
-                .getAsObjectList(PackageModel.class, new ParsedRequestListener<List<PackageModel>>() {
+                .getAsObjectList(BookModel.class, new ParsedRequestListener<List<BookModel>>() {
                     @Override
-                    public void onResponse(List<PackageModel> packagelist) {
+                    public void onResponse(List<BookModel> bookList) {
 
-                        package_adapter adapter = new package_adapter(context, packagelist);
+                        book_adapter adapter = new book_adapter(context, bookList);
 
-                        ListView list = findViewById(R.id.lv_package);
+                        final ListView list = findViewById(R.id.lv_book);
                         if (list != null)
                             list.setAdapter(adapter);
+
+
                     }
 
                     @Override
