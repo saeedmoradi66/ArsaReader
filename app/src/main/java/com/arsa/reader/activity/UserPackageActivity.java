@@ -19,19 +19,19 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-
-public class PackageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class UserPackageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_package);
+        setContentView(R.layout.activity_user_package);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -52,7 +52,7 @@ public class PackageActivity extends AppCompatActivity implements NavigationView
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PackageActivity.this, UserPackageActivity.class);
+                Intent intent = new Intent(UserPackageActivity.this, UserPackageActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -70,11 +70,11 @@ public class PackageActivity extends AppCompatActivity implements NavigationView
                     @Override
                     public void onResponse(List<PackageModel> packagelist) {
 
-                        package_adapter adapter=new package_adapter(context,packagelist);
+                        package_adapter adapter = new package_adapter(context, packagelist);
 
                         ListView list = findViewById(R.id.lv_package);
-                        if(list!=null)
-                        list.setAdapter(adapter);
+                        if (list != null)
+                            list.setAdapter(adapter);
                     }
 
                     @Override
@@ -97,9 +97,9 @@ public class PackageActivity extends AppCompatActivity implements NavigationView
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        int id = menuItem.getItemId();
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
