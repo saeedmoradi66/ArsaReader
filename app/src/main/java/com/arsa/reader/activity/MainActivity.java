@@ -3,6 +3,7 @@ package com.arsa.reader.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -16,7 +17,7 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
 import com.arsa.reader.adapter.category_grid_adapter;
 import com.arsa.reader.model.CategoryModel;
-import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
@@ -49,13 +50,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         grid_fill();
 
-        BottomAppBar fab = findViewById(R.id.bottom_app_bar);
+        FloatingActionButton fab = findViewById(R.id.bottom_app_bar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i("saeeeed", "onClick: ");
                 Intent intent = new Intent(MainActivity.this, UserPackageActivity.class);
                 startActivity(intent);
-                finish();
+
             }
         });
     }

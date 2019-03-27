@@ -14,7 +14,7 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
 import com.arsa.reader.adapter.package_adapter;
 import com.arsa.reader.model.PackageModel;
-import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class PackageActivity extends AppCompatActivity implements NavigationView
         Intent intent = getIntent();
         List_fill(Integer.parseInt(intent.getStringExtra("categoryID")));
 
-        BottomAppBar fab = findViewById(R.id.bottom_app_bar);
+        FloatingActionButton fab = findViewById(R.id.bottom_app_bar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

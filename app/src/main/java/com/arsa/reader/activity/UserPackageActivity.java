@@ -14,7 +14,7 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
 import com.arsa.reader.adapter.package_adapter;
 import com.arsa.reader.model.PackageModel;
-import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class UserPackageActivity extends AppCompatActivity implements Navigation
         Intent intent = getIntent();
         List_fill(Integer.parseInt(intent.getStringExtra("categoryID")));
 
-        BottomAppBar fab = findViewById(R.id.bottom_app_bar);
+        FloatingActionButton fab = findViewById(R.id.bottom_app_bar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +61,7 @@ public class UserPackageActivity extends AppCompatActivity implements Navigation
 
     public void List_fill(int id) {
         final Activity context = this;
-        AndroidNetworking.get(getString(R.string.server_url) + "/Package/GetByCategoryID/{id}")
+        AndroidNetworking.get(getString(R.string.server_url) + "/Package/GetByUserID/{id}")
                 .addPathParameter("id", String.valueOf(id))
                 .setTag(this)
                 .setPriority(Priority.HIGH)
