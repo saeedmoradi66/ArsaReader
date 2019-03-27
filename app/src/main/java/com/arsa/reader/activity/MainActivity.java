@@ -3,7 +3,6 @@ package com.arsa.reader.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -50,11 +49,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         grid_fill();
 
-        FloatingActionButton fab = findViewById(R.id.bottom_app_bar);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("saeeeed", "onClick: ");
+
                 Intent intent = new Intent(MainActivity.this, UserPackageActivity.class);
                 startActivity(intent);
 

@@ -48,7 +48,7 @@ public class UserPackageActivity extends AppCompatActivity implements Navigation
         Intent intent = getIntent();
         List_fill(Integer.parseInt(intent.getStringExtra("categoryID")));
 
-        FloatingActionButton fab = findViewById(R.id.bottom_app_bar);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
