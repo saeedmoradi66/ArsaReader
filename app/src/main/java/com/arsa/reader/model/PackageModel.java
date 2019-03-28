@@ -7,5 +7,5 @@ public class PackageModel {
     public int Price;
     public boolean IsActive;
     public int Rate;
-
+    public String Description ;
 }

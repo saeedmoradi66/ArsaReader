@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.androidnetworking.AndroidNetworking;
@@ -68,13 +69,23 @@ public class PackageActivity extends AppCompatActivity implements NavigationView
                 .build()
                 .getAsObjectList(PackageModel.class, new ParsedRequestListener<List<PackageModel>>() {
                     @Override
-                    public void onResponse(List<PackageModel> packagelist) {
+                    public void onResponse(final List<PackageModel> packagelist) {
 
                         package_adapter adapter=new package_adapter(context,packagelist);
 
                         ListView list = findViewById(R.id.lv_package);
                         if(list!=null)
                         list.setAdapter(adapter);
+
+                        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                                Intent myIntent = new Intent(PackageActivity.this, PackageDetailActivity.class);
+                                myIntent.putExtra("packageID", String.valueOf(packagelist.get(i).PackageID));
+                                PackageActivity.this.startActivity(myIntent);
+                            }
+                        });
                     }
 
                     @Override
