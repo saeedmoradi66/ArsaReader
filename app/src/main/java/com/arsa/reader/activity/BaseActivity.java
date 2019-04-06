@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import com.arsa.reader.R;
 import com.arsa.reader.common.preferences;
 import com.arsa.reader.fragment.LoginFragment;
-import com.github.juanlabrador.badgecounter.BadgeCounter;
 import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,27 +43,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        preferences p =new preferences(this);
-        if(p.getstringset("Cart")!=null)
-        {
-            CartCounter=p.getstringset("Cart").size();
-        }
-        CartCounter=10;
-        getMenuInflater().inflate(R.menu.cart, menu);
-        if (CartCounter >= 0) {
-            BadgeCounter.update(this,
-                    menu.findItem(R.id.notification),
-                    R.drawable.ic_menu_camera,
-                    BadgeCounter.BadgeColor.RED,
-                    CartCounter);}
-        /*} else {
-            BadgeCounter.hide(menu.findItem(R.id.notification));
-        }*/
 
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
