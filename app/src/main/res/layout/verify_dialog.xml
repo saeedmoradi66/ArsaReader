@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:textAlignment="center"
+        android:textSize="17dp"
+        android:textColor="@color/layout_back"
+        android:text="کد فعالسازی را وارد کنید" />
+
+
+    <EditText
+        android:id="@+id/tvVerifyCode"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="کد فعالسازی"
+        android:inputType="number"
+        android:maxLength="5"
+        android:textAlignment="center"
+        android:textSize="17dp" />
+
+
+    <Button
+        android:id="@+id/btnVerify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ارسال"
+        android:textColor="@color/White"
+        android:textSize="17dp"
+        android:background="@drawable/selector_btn"
+        android:layout_margin="16dp"/>
+</LinearLayout>

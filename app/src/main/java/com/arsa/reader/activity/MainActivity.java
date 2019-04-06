@@ -3,6 +3,7 @@ package com.arsa.reader.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -15,7 +16,9 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
 import com.arsa.reader.adapter.category_grid_adapter;
+import com.arsa.reader.common.preferences;
 import com.arsa.reader.model.CategoryModel;
+import com.github.juanlabrador.badgecounter.BadgeCounter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -28,7 +31,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,28 +135,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        preferences p =new preferences(this);
+        int CartCounter;
+        if(p.getstringset("Cart")!=null)
+        {
+            CartCounter=p.getstringset("Cart").size();
         }
+        CartCounter=10;
+        getMenuInflater().inflate(R.menu.cart, menu);
+        if (CartCounter >= 0) {
+            BadgeCounter.update(this,
+                    menu.findItem(R.id.notification),
+                    R.drawable.ic_menu_camera,
+                    BadgeCounter.BadgeColor.RED,
+                    CartCounter);}
+        /*} else {
+            BadgeCounter.hide(menu.findItem(R.id.notification));
+        }*/
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

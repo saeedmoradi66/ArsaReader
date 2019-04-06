@@ -6,6 +6,6 @@ public class PackageModel {
     public String PackageTitle;
     public int Price;
     public boolean IsActive;
-    public int Rate;
+    public int Score;
     public String Description ;
 }

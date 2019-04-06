@@ -47,7 +47,7 @@ public class package_adapter extends ArrayAdapter<PackageModel> {
         Typeface pricetypeface = Typeface.createFromAsset(context.getAssets(), "fonts/Vazir-Light-FD.otf");
         priceText.setTypeface(pricetypeface);
         priceText.setText(_Data.get(position).Price+" ریال ");
-        ratingBar.setRating(_Data.get(position).Rate);
+        ratingBar.setRating(_Data.get(position).Score);
         return rowView;
 
     };

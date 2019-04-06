@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:textAlignment="center"
+        android:textSize="17dp"
+        android:textColor="@color/layout_back"
+        android:text="شماره ی موبایل تان را وارد کنید" />
+
+
+    <EditText
+        android:id="@+id/tvMobile"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="شماره ی موبایل"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:textSize="17dp"
+        android:textAlignment="center"/>
+
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ادامه"
+        android:textColor="@color/White"
+        android:textSize="17dp"
+        android:background="@drawable/selector_btn"
+        android:layout_margin="16dp"/>
+</LinearLayout>
