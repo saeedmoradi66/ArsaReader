@@ -13,6 +13,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
 import com.arsa.reader.adapter.book_adapter;
+import com.arsa.reader.common.OnClickMaker;
 import com.arsa.reader.model.BookModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -49,14 +50,8 @@ public class UserBookActivity extends BaseActivity {
         List_fill(Integer.parseInt(intent.getStringExtra("packageID")));
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserBookActivity.this, UserPackageActivity.class);
-                startActivity(intent);
 
-            }
-        });
+        fab.setOnClickListener(new OnClickMaker(this));
     }
 
     public void List_fill(int id) {

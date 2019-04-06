@@ -19,6 +19,7 @@ import com.arsa.reader.R;
 import com.arsa.reader.adapter.book_adapter;
 import com.arsa.reader.adapter.book_simple_adapter;
 import com.arsa.reader.adapter.pager_adapter;
+import com.arsa.reader.common.OnClickMaker;
 import com.arsa.reader.model.BookModel;
 import com.arsa.reader.model.PackageModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -61,14 +62,8 @@ public class PackageDetailActivity extends BaseActivity {
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(PackageDetailActivity.this, UserPackageActivity.class);
-                startActivity(intent);
 
-            }
-        });
+        fab.setOnClickListener(new OnClickMaker(this));
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);

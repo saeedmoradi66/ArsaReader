@@ -16,12 +16,11 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
 import com.arsa.reader.adapter.category_grid_adapter;
+import com.arsa.reader.common.OnClickMaker;
 import com.arsa.reader.common.preferences;
 import com.arsa.reader.model.CategoryModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.mikepenz.actionitembadge.library.ActionItemBadge;
-import com.mikepenz.actionitembadge.library.ActionItemBadgeAdder;
 
 import java.util.List;
 
@@ -54,15 +53,8 @@ public class MainActivity extends BaseActivity {
         grid_fill();
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, UserPackageActivity.class);
-                startActivity(intent);
-
-            }
-        });
+        fab.setOnClickListener(new OnClickMaker(this));
     }
 
     public void grid_fill() {
