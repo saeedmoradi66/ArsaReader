@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.PackageDetailActivity"
+    tools:showIn="@layout/app_bar_package_detail">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/White"
+        android:orientation="vertical"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3">
+
+            <com.androidnetworking.widget.ANImageView
+                android:id="@+id/package_image"
+                android:layout_width="90dip"
+                android:layout_height="90dip"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border_image"
+                android:cropToPadding="true"
+                android:padding="1dp"
+                android:scaleType="centerCrop" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:gravity="right"
+                    android:lineSpacingExtra="10dp"
+                    android:maxLines="2"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/layout_back"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/lightblue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+
+                >
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:max="5"
+                    android:stepSize="1"
+                    android:rotation="180"
+                    android:scaleY="-1"
+                    style="@style/Widget.AppCompat.RatingBar.Small"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:tabIndicatorColor="@color/lightblue"
+            app:tabSelectedTextColor="@color/lightblue"
+            android:background="@drawable/border_tab"
+            >
+            <com.google.android.material.tabs.TabItem
+                android:text="لیست کتاب ها"
+                android:layout_height="170dip"
+                android:layout_width="match_parent"
+                />
+            <com.google.android.material.tabs.TabItem
+                android:text="توضیحات"
+                android:layout_height="170dip"
+                android:layout_width="match_parent"
+                />
+        </com.google.android.material.tabs.TabLayout>
+
+       <androidx.viewpager.widget.ViewPager
+           xmlns:android="http://schemas.android.com/apk/res/android"
+           android:id="@+id/pager"
+           android:layout_width="match_parent"
+           android:layout_height="170dip"
+           android:scrollbars="vertical"
+           />
+    </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
