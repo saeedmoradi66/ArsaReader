@@ -102,7 +102,7 @@ public class LoginFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        preferences p =new preferences(getActivity());
+       preferences p =new preferences(getActivity());
         if(p.getstring("Key")!=null)
         {
             dismiss();

@@ -10,7 +10,7 @@
     <ListView
         android:id="@+id/lv_book"
         android:layout_width="match_parent"
-        android:layout_height="170dip"
+        android:layout_height="170dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="7dp" />
   <!--</ScrollView>-->

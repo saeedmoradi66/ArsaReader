@@ -1,13 +1,16 @@
 package com.arsa.reader.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -18,9 +21,14 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
 import com.arsa.reader.adapter.book_adapter;
 import com.arsa.reader.adapter.book_simple_adapter;
+import com.arsa.reader.adapter.comment_adapter;
 import com.arsa.reader.adapter.pager_adapter;
 import com.arsa.reader.common.OnClickMaker;
+import com.arsa.reader.common.preferences;
+import com.arsa.reader.fragment.LoginFragment;
+import com.arsa.reader.fragment.RatingFragment;
 import com.arsa.reader.model.BookModel;
+import com.arsa.reader.model.CommentModel;
 import com.arsa.reader.model.PackageModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -32,9 +40,12 @@ import java.util.List;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 
@@ -57,6 +68,9 @@ public class PackageDetailActivity extends BaseActivity {
         Intent intent = getIntent();
         GetData(Integer.parseInt(intent.getStringExtra("packageID")));
         GetBooks(Integer.parseInt(intent.getStringExtra("packageID")));
+        RateBtn(this,Integer.parseInt(intent.getStringExtra("packageID")));
+        CommentBtn(Integer.parseInt(intent.getStringExtra("packageID")));
+        BuyBtn(Integer.parseInt(intent.getStringExtra("packageID")));
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -86,6 +100,7 @@ public class PackageDetailActivity extends BaseActivity {
 
             }
         });
+
     }
 
     public void GetData(int id) {
@@ -155,6 +170,67 @@ public class PackageDetailActivity extends BaseActivity {
                     }
 
                 });
+    }
+    public void RateBtn(final Context context, final int packageID){
+        Button BtnRate = findViewById(R.id.btnRate);
+        BtnRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                preferences p =new preferences(context);
+                if(p.getstring("Key")!=null)
+                {
+                    RatingFragment dialogFragment = new RatingFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("notAlertDialog", true);
+                    bundle.putInt("Package",packageID);
+                    dialogFragment.setArguments(bundle);
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    Fragment prev = getSupportFragmentManager().findFragmentByTag("RateDialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+                    dialogFragment.show(ft, "RateDialog");
+                }
+                else
+                {
+                    LoginFragment dialogFragment = new LoginFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("notAlertDialog", true);
+                    dialogFragment.setArguments(bundle);
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    Fragment prev = getSupportFragmentManager().findFragmentByTag("LoginDialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+                    dialogFragment.show(ft, "LoginDialog");
+                }
+
+            }
+        });
+    }
+    public void CommentBtn(final int packageID)
+    {
+        Button BtnComment = findViewById(R.id.btnComment);
+        BtnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(PackageDetailActivity.this, CommentActivity.class);
+                myIntent.putExtra("PackageID",String.valueOf(packageID));
+                PackageDetailActivity.this.startActivity(myIntent);
+            }
+        });
+    }
+    public void BuyBtn(final int packageID)
+    {
+        Button btnBuy = findViewById(R.id.btnBuy);
+        btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SetCartItem(packageID);
+            }
+        });
     }
     @Override
     public void onBackPressed() {
