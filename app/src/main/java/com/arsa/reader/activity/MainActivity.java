@@ -132,22 +132,6 @@ public class MainActivity extends BaseActivity {
             super.onBackPressed();
         }
     }
-   /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.cart, menu);
 
-        //you can add some logic (hide it if the count == 0)
-        int badgeCount=10;
-        if (badgeCount > 0) {
-            ActionItemBadge.update(this, menu.findItem(R.id.item_samplebadge), FontAwesome.Icon.faw_android, ActionItemBadge.BadgeStyles.DARK_GREY, badgeCount);
-        } else {
-            ActionItemBadge.hide(menu.findItem(R.id.item_samplebadge));
-        }
-
-        //If you want to add your ActionItem programmatically you can do this too. You do the following:
-        new ActionItemBadgeAdder().act(this).menu(menu).title(R.string.sample_2).itemDetails(0, SAMPLE2_ID, 1).showAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS).add(bigStyle, 1);
-        return super.onCreateOptionsMenu(menu);
-    }*/
 
 }

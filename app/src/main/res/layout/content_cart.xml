@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.CartActivity"
+    tools:showIn="@layout/app_bar_cart">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/layout_back"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".activity.CartActivity"
+        tools:showIn="@layout/app_bar_cart">
+        <ListView
+            android:id="@+id/lv_package"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="@android:color/transparent"
+            android:layout_marginTop="7dp"
+            android:dividerHeight="7dp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

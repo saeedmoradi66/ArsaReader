@@ -83,7 +83,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         {
             @Override public void onClick(View v)
             {
-                Log.i("rah","c");
+                Intent myIntent = new Intent(BaseActivity.this, CartActivity.class);
+                BaseActivity.this.startActivity(myIntent);
+
             }
         });
         return super.onCreateOptionsMenu(menu);
