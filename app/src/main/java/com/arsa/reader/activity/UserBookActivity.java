@@ -71,7 +71,6 @@ public class UserBookActivity extends BaseActivity {
                         if (list != null)
                             list.setAdapter(adapter);
 
-
                     }
 
                     @Override

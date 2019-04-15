@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
+import android.opengl.Visibility;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
@@ -68,10 +71,10 @@ public class PackageDetailActivity extends BaseActivity {
         Intent intent = getIntent();
         GetData(Integer.parseInt(intent.getStringExtra("packageID")));
         GetBooks(Integer.parseInt(intent.getStringExtra("packageID")));
-        RateBtn(this,Integer.parseInt(intent.getStringExtra("packageID")));
+        RateBtn(this, Integer.parseInt(intent.getStringExtra("packageID")));
         CommentBtn(Integer.parseInt(intent.getStringExtra("packageID")));
         BuyBtn(Integer.parseInt(intent.getStringExtra("packageID")));
-
+        ShowBooks(Integer.parseInt(intent.getStringExtra("packageID")));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
@@ -81,7 +84,7 @@ public class PackageDetailActivity extends BaseActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final pager_adapter adapter= new pager_adapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        final pager_adapter adapter = new pager_adapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -105,8 +108,17 @@ public class PackageDetailActivity extends BaseActivity {
 
     public void GetData(int id) {
         final Activity context = this;
-        AndroidNetworking.get(getString(R.string.server_url) + "/Package/GetByID/{id}")
+
+        preferences p = new preferences(this);
+
+
+        String cellPhone = p.getstring("Phone");
+        String token = p.getstring("Key");
+        String serialNo = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        AndroidNetworking.get(getString(R.string.server_url) + "/Package/GetByID/{id}/{token}/{serialno}")
                 .addPathParameter("id", String.valueOf(id))
+                .addPathParameter("token", String.valueOf(token))
+                .addPathParameter("serialno", String.valueOf(serialNo))
                 .setTag(this)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -129,10 +141,23 @@ public class PackageDetailActivity extends BaseActivity {
                         TextView priceText = (TextView) findViewById(R.id.tv_price);
                         Typeface pricetypeface = Typeface.createFromAsset(context.getAssets(), "fonts/Vazir-Light-FD.otf");
                         priceText.setTypeface(pricetypeface);
-                        priceText.setText(packagedetail.Price+" ریال ");
+                        priceText.setText(packagedetail.Price + " ریال ");
 
                         TextView descriptionText = (TextView) findViewById(R.id.tv_description);
-                        descriptionText.setText(HtmlCompat.fromHtml(packagedetail.Description, 0) );
+                        descriptionText.setText(HtmlCompat.fromHtml(packagedetail.Description, 0));
+                        final Button btnBuy = findViewById(R.id.btnBuy);
+                        final Button btnShowBooks = findViewById(R.id.btnViewBooks);
+
+                        if(packagedetail.StatusID==1)
+                        {
+                            btnBuy.setVisibility(View.GONE);
+                            btnShowBooks.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            btnBuy.setVisibility(View.VISIBLE);
+                            btnShowBooks.setVisibility(View.GONE);
+                        }
                     }
 
                     @Override
@@ -143,6 +168,7 @@ public class PackageDetailActivity extends BaseActivity {
 
                 });
     }
+
     public void GetBooks(int id) {
         final Activity context = this;
         AndroidNetworking.get(getString(R.string.server_url) + "/Book/GetByPackageID/{id}")
@@ -159,8 +185,6 @@ public class PackageDetailActivity extends BaseActivity {
                         final ListView list = findViewById(R.id.lv_book);
                         if (list != null)
                             list.setAdapter(adapter);
-
-
                     }
 
                     @Override
@@ -171,18 +195,18 @@ public class PackageDetailActivity extends BaseActivity {
 
                 });
     }
-    public void RateBtn(final Context context, final int packageID){
+
+    public void RateBtn(final Context context, final int packageID) {
         Button BtnRate = findViewById(R.id.btnRate);
         BtnRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                preferences p =new preferences(context);
-                if(p.getstring("Key")!=null)
-                {
+                preferences p = new preferences(context);
+                if (p.getstring("Key") != null) {
                     RatingFragment dialogFragment = new RatingFragment();
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("notAlertDialog", true);
-                    bundle.putInt("Package",packageID);
+                    bundle.putInt("Package", packageID);
                     dialogFragment.setArguments(bundle);
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     Fragment prev = getSupportFragmentManager().findFragmentByTag("RateDialog");
@@ -191,9 +215,7 @@ public class PackageDetailActivity extends BaseActivity {
                     }
                     ft.addToBackStack(null);
                     dialogFragment.show(ft, "RateDialog");
-                }
-                else
-                {
+                } else {
                     LoginFragment dialogFragment = new LoginFragment();
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("notAlertDialog", true);
@@ -210,25 +232,41 @@ public class PackageDetailActivity extends BaseActivity {
             }
         });
     }
-    public void CommentBtn(final int packageID)
-    {
+
+    public void CommentBtn(final int packageID) {
         Button BtnComment = findViewById(R.id.btnComment);
         BtnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(PackageDetailActivity.this, CommentActivity.class);
-                myIntent.putExtra("PackageID",String.valueOf(packageID));
+                myIntent.putExtra("PackageID", String.valueOf(packageID));
                 PackageDetailActivity.this.startActivity(myIntent);
             }
         });
     }
-    public void BuyBtn(final int packageID)
-    {
-        Button btnBuy = findViewById(R.id.btnBuy);
+
+    public void BuyBtn(final int packageID) {
+        final Button btnBuy = findViewById(R.id.btnBuy);
+        final Button btnShowBooks = findViewById(R.id.btnViewBooks);
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SetCartItem(packageID);
+
+            }
+        });
+    }
+    public void ShowBooks(final int packageID) {
+
+        final Button btnShowBooks = findViewById(R.id.btnViewBooks);
+        btnShowBooks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //SetCartItem(packageID);
+                Intent myIntent = new Intent(PackageDetailActivity.this, UserBookActivity.class);
+                myIntent.putExtra("packageID", String.valueOf(packageID));
+
+                PackageDetailActivity.this.startActivity(myIntent);
             }
         });
     }

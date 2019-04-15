@@ -101,16 +101,26 @@
             android:orientation="horizontal"
             android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="10dp">
+
             <Button
                 android:id="@+id/btnBuy"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:text="خرید کتاب"
                 android:layout_gravity="end"
+                android:background="@drawable/selector_btn"
+                android:text="خرید بسته"
+                android:textColor="@color/White"
+                android:textSize="17dp" />
+            <Button
+                android:id="@+id/btnViewBooks"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@drawable/selector_btn"
+                android:text="مشاهده کتاب ها"
                 android:textColor="@color/White"
                 android:textSize="17dp"
-                android:background="@drawable/selector_btn"
-                />
+                android:visibility="gone"/>
 
         </LinearLayout>
    <LinearLayout

@@ -101,11 +101,7 @@ public class UserPackageActivity extends BaseActivity {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        List_fill();
-    }
+
 
     public void LoadList(String cellPhone, String token, String serialNo) {
         UserModel user = new UserModel();

@@ -8,4 +8,7 @@ public class PackageModel {
     public boolean IsActive;
     public int Score;
     public String Description ;
+    public String Token;
+    public String SerialNo;
+    public byte StatusID;
 }

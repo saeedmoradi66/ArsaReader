@@ -56,6 +56,18 @@
                 android:layout_height="wrap_content"
                 android:paddingRight="10dp"
                 android:textColor="@color/lightblue" />
+
+            <Button
+                android:id="@+id/btnDownload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="دانلود" />
+            <Button
+                android:id="@+id/btnRead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="خواندن کتاب" />
+
         </LinearLayout>
 
 
