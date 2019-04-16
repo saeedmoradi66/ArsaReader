@@ -3,8 +3,10 @@ package com.arsa.reader.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.androidnetworking.AndroidNetworking;
@@ -52,6 +54,7 @@ public class UserBookActivity extends BaseActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(new OnClickMaker(this));
+
     }
 
     public void List_fill(int id) {

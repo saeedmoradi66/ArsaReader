@@ -62,6 +62,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="دانلود" />
+            <ProgressBar
+                android:id="@+id/simpleProgressBar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:max="100" /><!--set 100 maximum value for the progress bar-->
             <Button
                 android:id="@+id/btnRead"
                 android:layout_width="match_parent"
