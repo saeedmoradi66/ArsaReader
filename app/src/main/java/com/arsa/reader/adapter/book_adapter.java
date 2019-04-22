@@ -19,6 +19,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.DownloadListener;
 import com.androidnetworking.interfaces.DownloadProgressListener;
 import com.arsa.reader.R;
+import com.arsa.reader.activity.BookReader;
 import com.arsa.reader.activity.CommentActivity;
 import com.arsa.reader.activity.PackageDetailActivity;
 import com.arsa.reader.common.preferences;
@@ -69,7 +70,7 @@ public class book_adapter extends ArrayAdapter<BookModel> {
         File rootDataDir = context.getFilesDir();
         //final String dirPath=rootDataDir.toString()+"/ebooks";
         final File dirPath = new File(context.getFilesDir()+File.separator+"ebooks");
-        final File filePath = new File(context.getFilesDir()+File.separator+"ebooks"+File.separator+_Data.get(position).BookID);
+        final File filePath = new File(context.getFilesDir()+File.separator+"ebooks"+File.separator+_Data.get(position).BookID+".epub");
         if(dirPath.isDirectory()==false) {
             dirPath.mkdirs();
         }
@@ -87,7 +88,7 @@ public class book_adapter extends ArrayAdapter<BookModel> {
         btnDownload.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                AndroidNetworking.download(Url, dirPath.toString(), Integer.toString(_Data.get(position).BookID))
+                AndroidNetworking.download(Url, dirPath.toString(), Integer.toString(_Data.get(position).BookID)+".epub")
                         .setTag("downloadTest")
                         .setPriority(Priority.MEDIUM)
                         .build()
@@ -121,7 +122,7 @@ public class book_adapter extends ArrayAdapter<BookModel> {
 
         btnRead.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), CommentActivity.class);
+                Intent myIntent = new Intent(v.getContext(), BookReader.class);
                 myIntent.putExtra("BookID", String.valueOf(_Data.get(position).BookID));
                 v.getContext().startActivity(myIntent);
             }
