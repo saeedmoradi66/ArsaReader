@@ -46,7 +46,7 @@ public class BookReader extends AppCompatActivity implements OnHighlightListener
         Config config = AppUtil.getSavedConfig(getApplicationContext());
         if (config == null)
             config = new Config();
-        config.setAllowedDirection(Config.AllowedDirection.ONLY_HORIZONTAL);
+        config.setAllowedDirection(Config.AllowedDirection.ONLY_VERTICAL);
 
 
         String filePath = getFilesDir()+File.separator+"ebooks"+File.separator+BookID+".epub";
