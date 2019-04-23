@@ -23,7 +23,10 @@ public class preferences {
     }
 	public  void setstringset(String name, Set<String> value)
 	{
-
+		if(value.size()==0)
+		{
+			delete_key(name);
+		}
 		Editor editor = pref.edit();
 		editor.putStringSet(name, value);
 		editor.commit();

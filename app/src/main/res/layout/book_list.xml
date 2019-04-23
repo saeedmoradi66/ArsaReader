@@ -35,44 +35,67 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:gravity="right"
+                    android:lineSpacingExtra="10dp"
+                    android:maxLines="2"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/layout_back"
+                    android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_Author"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/lightblue" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:gravity="right"
-                android:lineSpacingExtra="10dp"
-                android:maxLines="2"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/layout_back"
-                android:textSize="14sp" />
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:gravity="left"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/btnDownload"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/selector_btn"
+                    android:text="دانلود"
+                    android:textColor="@color/White"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="17dp" />
 
-            <TextView
-                android:id="@+id/tv_Content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingRight="10dp"
-                android:textColor="@color/lightblue" />
-
-            <Button
-                android:id="@+id/btnDownload"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="دانلود" />
-            <ProgressBar
-                android:id="@+id/simpleProgressBar"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:max="100" /><!--set 100 maximum value for the progress bar-->
-            <Button
-                android:id="@+id/btnRead"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="خواندن کتاب" />
+                <Button
+                    android:id="@+id/btnRead"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/selector_btn"
+                    android:text="خواندن "
+                    android:textColor="@color/White"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="17dp" />
+                <ProgressBar
+                    android:id="@+id/simpleProgressBar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:max="100" />
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -11,4 +11,6 @@
     <color name="lightblue">#247EE3</color>
     <color name="ratecolor">#E5C511</color>
     <color name="black">#000000</color>
+    <color name="delete">#FF7474</color>
+    <color name="gray">#EFEFEF</color>
 </resources>

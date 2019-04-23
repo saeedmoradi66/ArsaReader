@@ -45,7 +45,7 @@ public class book_adapter extends ArrayAdapter<BookModel> {
         final View rowView = inflater.inflate(R.layout.book_list, null, true);
 
         TextView titleText = rowView.findViewById(R.id.tv_title);
-        TextView contentText = rowView.findViewById(R.id.tv_Content);
+        TextView authorText = rowView.findViewById(R.id.tv_Author);
         final com.androidnetworking.widget.ANImageView book_image = rowView.findViewById(R.id.book_image);
 
         final String URL_IMAGE = "http://testclub.ir/showmenupic.ashx?id=25";
@@ -56,8 +56,8 @@ public class book_adapter extends ArrayAdapter<BookModel> {
         titleText.setText(_Data.get(position).BookTitle);
 
         Typeface pricetypeface = Typeface.createFromAsset(context.getAssets(), "fonts/Vazir-Light-FD.otf");
-        contentText.setTypeface(pricetypeface);
-        contentText.setText(_Data.get(position).Contents);
+        authorText.setTypeface(pricetypeface);
+        authorText.setText(_Data.get(position).author);
         final Button btnRead = (Button) rowView.findViewById(R.id.btnRead);
         btnRead.setVisibility(View.GONE);
         final Button btnDownload = (Button) rowView.findViewById(R.id.btnDownload);

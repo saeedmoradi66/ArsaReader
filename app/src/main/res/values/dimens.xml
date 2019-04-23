@@ -7,4 +7,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="grid_photo_size">110dp</dimen>
     <dimen name="grid_photo_spacing">4dp</dimen>
+    <dimen name="BottomAppBarHeight">50dp</dimen>
 </resources>
