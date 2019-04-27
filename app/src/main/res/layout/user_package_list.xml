@@ -49,40 +49,14 @@
                 android:gravity="right"
                 android:lineSpacingExtra="10dp"
                 android:maxLines="2"
-                android:paddingTop="10dp"
+                android:paddingTop="20dp"
                 android:paddingBottom="10dp"
                 android:textColor="@color/layout_back"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingRight="10dp"
-                android:textColor="@color/lightblue" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:orientation="horizontal"
-
-            >
-            <RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:isIndicator="true"
-                android:numStars="5"
-                android:max="5"
-                android:stepSize="1"
-                android:rotation="180"
-                android:scaleY="-1"
-                style="@style/Widget.AppCompat.RatingBar.Small"/>
 
         </LinearLayout>
+
 
 
     </LinearLayout>

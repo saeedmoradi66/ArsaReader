@@ -11,20 +11,20 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
 import com.arsa.reader.model.PackageModel;
+import com.arsa.reader.model.UserPackagesModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class package_adapter extends ArrayAdapter<PackageModel> {
+public class user_package_adapter extends ArrayAdapter<UserPackagesModel> {
     private final Activity context;
-    private final List<PackageModel> _Data;
-    public package_adapter(Activity context, List<PackageModel> data) {
-        super(context, R.layout.package_list,data);
+    private final List<UserPackagesModel> _Data;
+    public user_package_adapter(Activity context, List<UserPackagesModel> data) {
+        super(context, R.layout.user_package_list,data);
 
         _Data=data;
         this.context=context;
@@ -33,11 +33,9 @@ public class package_adapter extends ArrayAdapter<PackageModel> {
 
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater=context.getLayoutInflater();
-        View rowView=inflater.inflate(R.layout.package_list, null,true);
+        View rowView=inflater.inflate(R.layout.user_package_list, null,true);
 
         TextView titleText = (TextView) rowView.findViewById(R.id.tv_title);
-        TextView priceText = (TextView) rowView.findViewById(R.id.tv_price);
-        RatingBar ratingBar = (RatingBar) rowView.findViewById(R.id.ratingBar);
         final ImageView package_image = rowView.findViewById(R.id.package_image);
 
         final String URL_IMAGE = "http://testclub.ir/showmenupic.ashx?id=25";
@@ -74,10 +72,7 @@ public class package_adapter extends ArrayAdapter<PackageModel> {
         titleText.setTypeface(titletypeface);
         titleText.setText(_Data.get(position).PackageTitle);
 
-        Typeface pricetypeface = Typeface.createFromAsset(context.getAssets(), "fonts/Vazir-Light-FD.otf");
-        priceText.setTypeface(pricetypeface);
-        priceText.setText(_Data.get(position).Price+" ریال ");
-        ratingBar.setRating(_Data.get(position).Score);
+
         return rowView;
 
     };

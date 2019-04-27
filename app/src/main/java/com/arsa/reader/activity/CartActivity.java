@@ -60,9 +60,12 @@ public class CartActivity extends BaseActivity {
         int Height= util.getScreenHeight(this);
         ListView list = findViewById(R.id.lv_package);
         ViewGroup.LayoutParams params = list.getLayoutParams();
-        params.height = (int) (Height-(getResources().getDimension(R.dimen.BottomAppBarHeight))-toolbar.getLayoutParams().height-100);
+        params.height = (int) (Height-(getResources().getDimension(R.dimen.BottomAppBarHeight))-toolbar.getLayoutParams().height-300);
         list.setLayoutParams(params);
 
+        TextView priceText = (TextView) findViewById(R.id.tv_TotalPrice);
+        Typeface pricetypeface = Typeface.createFromAsset(getAssets(), "fonts/Vazir-Light-FD.otf");
+        priceText.setTypeface(pricetypeface);
 
         List_fill();
 

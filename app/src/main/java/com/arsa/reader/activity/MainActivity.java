@@ -3,8 +3,6 @@ package com.arsa.reader.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
@@ -16,8 +14,9 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
 import com.arsa.reader.adapter.category_grid_adapter;
+
+
 import com.arsa.reader.common.OnClickMaker;
-import com.arsa.reader.common.preferences;
 import com.arsa.reader.model.CategoryModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -25,7 +24,6 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.List;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -59,6 +57,8 @@ public class MainActivity extends BaseActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(new OnClickMaker(this));
+
+
     }
 
     public void grid_fill() {

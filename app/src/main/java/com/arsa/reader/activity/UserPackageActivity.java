@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,11 +17,13 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
 import com.arsa.reader.adapter.package_adapter;
+import com.arsa.reader.adapter.user_package_adapter;
 import com.arsa.reader.common.OnClickMaker;
 import com.arsa.reader.common.preferences;
 import com.arsa.reader.fragment.LoginFragment;
 import com.arsa.reader.model.PackageModel;
 import com.arsa.reader.model.UserModel;
+import com.arsa.reader.model.UserPackagesModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -101,24 +104,22 @@ public class UserPackageActivity extends BaseActivity {
 
     }
 
-
-
     public void LoadList(String cellPhone, String token, String serialNo) {
         UserModel user = new UserModel();
         user.CellPhone = cellPhone;
         user.Token = token;
         user.SerialNo = serialNo;
         final Activity context = this;
-        AndroidNetworking.post(getString(R.string.server_url) + "/Package/GetByUserID")
+        AndroidNetworking.post(getString(R.string.server_url) + "/Package/GetUserPackages")
                 .addBodyParameter(user)
                 .setTag("test")
                 .setPriority(Priority.HIGH)
                 .build()
-                .getAsObjectList(PackageModel.class, new ParsedRequestListener<List<PackageModel>>() {
+                .getAsObjectList(UserPackagesModel.class, new ParsedRequestListener<List<UserPackagesModel>>() {
                     @Override
-                    public void onResponse(final List<PackageModel> packagelist) {
+                    public void onResponse(final List<UserPackagesModel> packagelist) {
 
-                        package_adapter adapter = new package_adapter(context, packagelist);
+                        user_package_adapter adapter = new user_package_adapter(context, packagelist);
 
                         ListView list = findViewById(R.id.lv_package);
                         if (list != null)
@@ -138,7 +139,7 @@ public class UserPackageActivity extends BaseActivity {
                     @Override
                     public void onError(ANError anError) {
 
-
+                        Log.i("rah",anError.getMessage());
                     }
 
                 });
