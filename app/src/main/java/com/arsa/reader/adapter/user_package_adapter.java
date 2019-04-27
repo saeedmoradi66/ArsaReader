@@ -8,22 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.arsa.reader.R;
 import com.arsa.reader.model.PackageModel;
-import com.arsa.reader.model.UserPackagesModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class user_package_adapter extends ArrayAdapter<UserPackagesModel> {
+public class user_package_adapter extends ArrayAdapter<PackageModel> {
     private final Activity context;
-    private final List<UserPackagesModel> _Data;
-    public user_package_adapter(Activity context, List<UserPackagesModel> data) {
+    private final List<PackageModel> _Data;
+    public user_package_adapter(Activity context, List<PackageModel> data) {
         super(context, R.layout.user_package_list,data);
 
         _Data=data;

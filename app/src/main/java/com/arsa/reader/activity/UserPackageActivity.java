@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,27 +12,20 @@ import android.widget.ListView;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
-import com.arsa.reader.adapter.package_adapter;
 import com.arsa.reader.adapter.user_package_adapter;
 import com.arsa.reader.common.OnClickMaker;
 import com.arsa.reader.common.preferences;
 import com.arsa.reader.fragment.LoginFragment;
 import com.arsa.reader.model.PackageModel;
 import com.arsa.reader.model.UserModel;
-import com.arsa.reader.model.UserPackagesModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import org.json.JSONArray;
-
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -115,9 +107,9 @@ public class UserPackageActivity extends BaseActivity {
                 .setTag("test")
                 .setPriority(Priority.HIGH)
                 .build()
-                .getAsObjectList(UserPackagesModel.class, new ParsedRequestListener<List<UserPackagesModel>>() {
+                .getAsObjectList(PackageModel.class, new ParsedRequestListener<List<PackageModel>>() {
                     @Override
-                    public void onResponse(final List<UserPackagesModel> packagelist) {
+                    public void onResponse(final List<PackageModel> packagelist) {
 
                         user_package_adapter adapter = new user_package_adapter(context, packagelist);
 
