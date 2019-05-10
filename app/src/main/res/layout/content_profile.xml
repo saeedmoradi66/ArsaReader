@@ -8,6 +8,45 @@
     tools:context=".activity.ProfileActivity"
     tools:showIn="@layout/app_bar_profile">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/tv_Name"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="نام و نام خانوادگی"
+            android:inputType="textPersonName"
+            android:maxLength="11"
+            android:textSize="17dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/txtCellPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="30dp"
+            android:text="09127538663"
+            android:textAlignment="center"
+            android:textColor="@color/green"
+            android:textSize="17dp" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ذخیره"
+            android:textColor="@color/White"
+            android:textSize="17dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/selector_btn"
+            />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

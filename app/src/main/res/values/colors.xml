@@ -13,4 +13,5 @@
     <color name="black">#000000</color>
     <color name="delete">#FF7474</color>
     <color name="gray">#EFEFEF</color>
+    <color name="green">#008000</color>
 </resources>
