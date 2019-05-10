@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.3">
 
-        <com.androidnetworking.widget.ANImageView
+        <ImageView
             android:id="@+id/book_image"
             android:layout_width="90dip"
             android:layout_height="90dip"

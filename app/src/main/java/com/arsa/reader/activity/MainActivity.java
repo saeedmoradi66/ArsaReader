@@ -2,13 +2,17 @@ package com.arsa.reader.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.ConnectionQuality;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
@@ -17,6 +21,7 @@ import com.arsa.reader.adapter.category_grid_adapter;
 
 
 import com.arsa.reader.common.OnClickMaker;
+import com.arsa.reader.common.util;
 import com.arsa.reader.model.CategoryModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -58,6 +63,11 @@ public class MainActivity extends BaseActivity {
 
         fab.setOnClickListener(new OnClickMaker(this));
 
+        //create db
+        SQLiteDatabase db=openOrCreateDatabase("Arsaa", MODE_PRIVATE,null);
+        db.execSQL("create table if not exists Package (PackageID int,PackageTitle NVARCHAR(100))");
+        db.execSQL("create table if not exists Books (BookID int,BookTitle NVARCHAR(100),author NVARCHAR(100))");
+        db.close();
 
     }
 
@@ -100,7 +110,7 @@ public class MainActivity extends BaseActivity {
 
                     @Override
                     public void onError(ANError anError) {
-
+                        Log.i("rah",anError.getMessage());
 
                     }
 

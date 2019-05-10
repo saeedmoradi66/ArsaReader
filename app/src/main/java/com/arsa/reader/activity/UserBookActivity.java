@@ -2,10 +2,13 @@ package com.arsa.reader.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -15,11 +18,14 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.arsa.reader.R;
 import com.arsa.reader.adapter.book_adapter;
+import com.arsa.reader.adapter.user_package_adapter;
 import com.arsa.reader.common.OnClickMaker;
 import com.arsa.reader.model.BookModel;
+import com.arsa.reader.model.PackageModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -68,11 +74,18 @@ public class UserBookActivity extends BaseActivity {
                     @Override
                     public void onResponse(List<BookModel> bookList) {
 
-                        book_adapter adapter = new book_adapter(context, bookList);
+                       /* book_adapter adapter = new book_adapter(context, bookList);
 
                         final ListView list = findViewById(R.id.lv_book);
                         if (list != null)
-                            list.setAdapter(adapter);
+                            list.setAdapter(adapter);*/
+                        SQLiteDatabase db=openOrCreateDatabase("Arsaa", MODE_PRIVATE,null);
+                        db.execSQL("delete from Books");
+                        for (BookModel item : bookList) {
+
+                            db.execSQL("insert into Books(BookID,BookTitle,author) values('"+item.BookID+"','"+item.BookTitle+"','"+item.author+"')");
+                        }
+                        Loadoffline();
 
                     }
 
@@ -83,6 +96,7 @@ public class UserBookActivity extends BaseActivity {
                     }
 
                 });
+        Loadoffline();
     }
 
     @Override
@@ -94,6 +108,27 @@ public class UserBookActivity extends BaseActivity {
             super.onBackPressed();
         }
     }
+    private  void Loadoffline()
+    {
+        SQLiteDatabase db=openOrCreateDatabase("Arsaa", MODE_PRIVATE,null);
+        Cursor crs=db.rawQuery("select * from Books", null);
+        final List<BookModel> Booklist=new ArrayList<BookModel>();
+        while(crs.moveToNext())
+        {
+            BookModel model=new BookModel();
+            model.BookID=crs.getInt(crs.getColumnIndex("BookID"));
+            model.BookTitle=crs.getString(crs.getColumnIndex("BookTitle"));
+            model.author=crs.getString(crs.getColumnIndex("author"));
+            Booklist.add(model);
+        }
 
+        book_adapter adapter = new book_adapter(this, Booklist);
+        final ListView list = findViewById(R.id.lv_book);
+        if (list != null)
+        {
+            list.setAdapter(adapter);
+
+        }
+    }
 
 }

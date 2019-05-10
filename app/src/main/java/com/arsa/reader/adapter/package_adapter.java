@@ -41,7 +41,7 @@ public class package_adapter extends ArrayAdapter<PackageModel> {
         final ImageView package_image = rowView.findViewById(R.id.package_image);
 
         final String URL_IMAGE = "http://testclub.ir/showmenupic.ashx?id=25";
-
+        Picasso.with(context).setIndicatorsEnabled(false);
        Picasso.with(context)
                 .load(URL_IMAGE)
                 .networkPolicy(NetworkPolicy.OFFLINE)

@@ -46,17 +46,27 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_account) {
 
-            LoginFragment dialogFragment = new LoginFragment();
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("notAlertDialog", true);
-            dialogFragment.setArguments(bundle);
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            Fragment prev = getSupportFragmentManager().findFragmentByTag("LoginDialog");
-            if (prev != null) {
-                ft.remove(prev);
+            preferences p =new preferences(this);
+            if(p.getstring("Key")==null)
+            {
+                LoginFragment dialogFragment = new LoginFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("notAlertDialog", true);
+                dialogFragment.setArguments(bundle);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Fragment prev = getSupportFragmentManager().findFragmentByTag("LoginDialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+                dialogFragment.show(ft, "LoginDialog");
             }
-            ft.addToBackStack(null);
-            dialogFragment.show(ft, "LoginDialog");
+            else
+            {
+                Intent myIntent = new Intent(BaseActivity.this, ProfileActivity.class);
+                BaseActivity.this.startActivity(myIntent);
+            }
+
         }
         else if (id == R.id.nav_signout) {
             preferences p =new preferences(this);

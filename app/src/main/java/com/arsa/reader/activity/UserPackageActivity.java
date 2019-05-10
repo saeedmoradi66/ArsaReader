@@ -2,6 +2,8 @@ package com.arsa.reader.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -23,6 +25,7 @@ import com.arsa.reader.model.UserModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -34,12 +37,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class UserPackageActivity extends BaseActivity {
 
+    ListView list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_package);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        list = findViewById(R.id.lv_package);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -101,7 +107,7 @@ public class UserPackageActivity extends BaseActivity {
         user.CellPhone = cellPhone;
         user.Token = token;
         user.SerialNo = serialNo;
-        final Activity context = this;
+
         AndroidNetworking.post(getString(R.string.server_url) + "/Package/GetUserPackages")
                 .addBodyParameter(user)
                 .setTag("test")
@@ -111,30 +117,53 @@ public class UserPackageActivity extends BaseActivity {
                     @Override
                     public void onResponse(final List<PackageModel> packagelist) {
 
-                        user_package_adapter adapter = new user_package_adapter(context, packagelist);
 
-                        ListView list = findViewById(R.id.lv_package);
-                        if (list != null)
-                            list.setAdapter(adapter);
+                            SQLiteDatabase db=openOrCreateDatabase("Arsaa", MODE_PRIVATE,null);
+                            db.execSQL("delete from Package");
+                            for (PackageModel item : packagelist) {
 
-                        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                                Intent myIntent = new Intent(UserPackageActivity.this, UserBookActivity.class);
-                                myIntent.putExtra("packageID", String.valueOf(packagelist.get(i).PackageID));
-                                UserPackageActivity.this.startActivity(myIntent);
+                                db.execSQL("insert into Package(PackageID,PackageTitle) values('"+item.PackageID+"','"+item.PackageTitle+"')");
                             }
-                        });
+                        LoadOffline();
                     }
 
                     @Override
                     public void onError(ANError anError) {
 
-                        Log.i("rah",anError.getMessage());
+
                     }
 
                 });
+        LoadOffline();
 
+
+    }
+    private  void LoadOffline()
+    {
+        SQLiteDatabase db=openOrCreateDatabase("Arsaa", MODE_PRIVATE,null);
+        Cursor crs=db.rawQuery("select * from Package", null);
+        final List<PackageModel> packagelist=new ArrayList<PackageModel>();
+        while(crs.moveToNext())
+        {
+            PackageModel model=new PackageModel();
+            model.PackageID=crs.getInt(crs.getColumnIndex("PackageID"));
+            model.PackageTitle=crs.getString(crs.getColumnIndex("PackageTitle"));
+            packagelist.add(model);
+        }
+
+        user_package_adapter adapter = new user_package_adapter(this, packagelist);
+        if (list != null)
+        {
+            list.setAdapter(adapter);
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    Intent myIntent = new Intent(UserPackageActivity.this, UserBookActivity.class);
+                    myIntent.putExtra("packageID", String.valueOf(packagelist.get(i).PackageID));
+                    UserPackageActivity.this.startActivity(myIntent);
+                }
+            });
+        }
     }
 }

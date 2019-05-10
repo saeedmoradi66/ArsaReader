@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-
+        android:name=".common.Global"
         tools:replace="android:appComponentFactory,android:allowBackup">
         <activity
             android:name=".activity.UserBookActivity"
@@ -50,7 +50,11 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.BookReader"
+        android:name=".activity.BookReader"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ProfileActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

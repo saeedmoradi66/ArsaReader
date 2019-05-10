@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Environment;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -24,6 +26,9 @@ import com.arsa.reader.activity.CommentActivity;
 import com.arsa.reader.activity.PackageDetailActivity;
 import com.arsa.reader.common.preferences;
 import com.arsa.reader.model.BookModel;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.List;
@@ -46,10 +51,37 @@ public class book_adapter extends ArrayAdapter<BookModel> {
 
         TextView titleText = rowView.findViewById(R.id.tv_title);
         TextView authorText = rowView.findViewById(R.id.tv_Author);
-        final com.androidnetworking.widget.ANImageView book_image = rowView.findViewById(R.id.book_image);
+        final ImageView book_image = rowView.findViewById(R.id.book_image);
 
         final String URL_IMAGE = "http://testclub.ir/showmenupic.ashx?id=25";
-        book_image.setImageUrl(URL_IMAGE);
+        Picasso.with(context).setIndicatorsEnabled(false);
+        Picasso.with(context)
+                .load(URL_IMAGE)
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .into(book_image, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.v("Picasso"," fetch image");
+                    }
+
+                    @Override
+                    public void onError() {
+                        //Try again online if cache failed
+                        Picasso.with(context)
+                                .load(URL_IMAGE)
+                                .into(book_image, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        Log.v("Picasso","Could not fetch image");
+                                    }
+                                });
+                    }
+                });
 
         Typeface titletypeface = Typeface.createFromAsset(context.getAssets(), "fonts/Vazir-Light-FD.otf");
         titleText.setTypeface(titletypeface);

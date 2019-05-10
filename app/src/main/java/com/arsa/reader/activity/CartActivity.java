@@ -78,6 +78,7 @@ public class CartActivity extends BaseActivity {
         final Activity context = this;
         preferences p =new preferences(this);
         Set<String> set =p.getstringset("Cart");
+        if(set!=null)
         if(set.size()>0)
         {
             String IDs="";
