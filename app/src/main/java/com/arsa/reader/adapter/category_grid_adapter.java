@@ -77,7 +77,7 @@ public class category_grid_adapter extends BaseAdapter {
 
         Typeface face = Typeface.createFromAsset(_Context.getAssets(), "fonts/Vazir-FD.otf");
         title.setTypeface(face);
-        final String URL_IMAGE = "http://testclub.ir/showmenupic.ashx?id=25";
+        final String URL_IMAGE =  _Context.getString(R.string.pic_url)+"/DownloadCategory/"+_Data.get(position).CategoryID;
         cover.setImageUrl(URL_IMAGE);
         title.setText(_Data.get(position % _Data.size()).CategoryTitle);
 

@@ -53,7 +53,7 @@ public class book_adapter extends ArrayAdapter<BookModel> {
         TextView authorText = rowView.findViewById(R.id.tv_Author);
         final ImageView book_image = rowView.findViewById(R.id.book_image);
 
-        final String URL_IMAGE = "http://testclub.ir/showmenupic.ashx?id=25";
+        final String URL_IMAGE = this.context.getString(R.string.pic_url)+"/DownloadBookImage/"+_Data.get(position).BookID;
         Picasso.with(context).setIndicatorsEnabled(false);
         Picasso.with(context)
                 .load(URL_IMAGE)

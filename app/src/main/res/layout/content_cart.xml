@@ -18,7 +18,34 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".activity.CartActivity"
         tools:showIn="@layout/app_bar_cart">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/tv_TotalPrice"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="match_parent"
+                android:text="جمع کل : 0 ریال"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16dp" />
+            <Button
+                android:id="@+id/btnPayment"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="پرداخت"
+                android:textColor="@color/White"
+                android:textSize="17dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/selector_btn"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
 
             <ListView
                 android:id="@+id/lv_package"
@@ -28,22 +55,7 @@
                 android:divider="@android:color/transparent"
                 android:dividerHeight="7dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:background="#EAEAEA"
-            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_TotalPrice"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:text="جمع کل : 0 ریال"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16dp" />
-
-        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

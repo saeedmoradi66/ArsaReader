@@ -1,5 +1,6 @@
 package com.arsa.reader.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.androidnetworking.interfaces.OkHttpResponseListener;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.arsa.reader.R;
+import com.arsa.reader.activity.BookReader;
 import com.arsa.reader.common.preferences;
 import com.arsa.reader.model.ArsaResponse;
 import com.arsa.reader.model.CategoryModel;
@@ -36,10 +38,20 @@ import androidx.fragment.app.FragmentTransaction;
 import okhttp3.Response;
 
 public class VerifyFragment extends DialogFragment {
-    
+    public OnFragmentCloseListener mCallback;
+
+    public interface OnFragmentCloseListener {
+        void onFragmentClose();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.verify_dialog, container, false);
+
+        try {
+            mCallback = (OnFragmentCloseListener) getActivity();
+        } catch (Exception e) {
+            Log.d("error", e.getMessage());
+        }
 
         return rootView;
     }
@@ -80,6 +92,7 @@ public class VerifyFragment extends DialogFragment {
                                 {
                                     preferences p =new preferences(getActivity());
                                     p.setstring("Key",response.Token);
+                                    mCallback.onFragmentClose();
                                     dismiss();
                                 }
                             }

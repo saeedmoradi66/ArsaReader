@@ -40,7 +40,7 @@ public class package_adapter extends ArrayAdapter<PackageModel> {
         RatingBar ratingBar = (RatingBar) rowView.findViewById(R.id.ratingBar);
         final ImageView package_image = rowView.findViewById(R.id.package_image);
 
-        final String URL_IMAGE = "http://testclub.ir/showmenupic.ashx?id=25";
+        final String URL_IMAGE =this.context.getString(R.string.pic_url)+"/DownloadPackage/"+_Data.get(position).PackageID;
         Picasso.with(context).setIndicatorsEnabled(false);
        Picasso.with(context)
                 .load(URL_IMAGE)

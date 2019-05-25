@@ -20,6 +20,7 @@ import com.arsa.reader.adapter.user_package_adapter;
 import com.arsa.reader.common.OnClickMaker;
 import com.arsa.reader.common.preferences;
 import com.arsa.reader.fragment.LoginFragment;
+import com.arsa.reader.fragment.VerifyFragment;
 import com.arsa.reader.model.PackageModel;
 import com.arsa.reader.model.UserModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,6 +29,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -35,7 +37,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-public class UserPackageActivity extends BaseActivity {
+public class UserPackageActivity extends BaseActivity implements VerifyFragment.OnFragmentCloseListener {
 
     ListView list;
     @Override
@@ -83,6 +85,8 @@ public class UserPackageActivity extends BaseActivity {
             }
             ft.addToBackStack(null);
             dialogFragment.show(ft, "LoginDialog");
+
+
         } else {
 
             LoadList(cellPhone, token, serialNo);
@@ -164,6 +168,23 @@ public class UserPackageActivity extends BaseActivity {
                     UserPackageActivity.this.startActivity(myIntent);
                 }
             });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onFragmentClose() {
+        preferences p = new preferences(this);
+        String cellPhone = p.getstring("Phone");
+        String token = p.getstring("Key");
+        String serialNo = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        if (token != null && cellPhone != null)
+        {
+            LoadList(cellPhone, token, serialNo);
         }
     }
 }

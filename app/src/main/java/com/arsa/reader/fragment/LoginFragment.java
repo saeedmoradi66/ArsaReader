@@ -42,7 +42,7 @@ public class LoginFragment extends DialogFragment {
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.login_dialog, container, false);
+        View rootView = inflater.inflate(R.layout.login_dialog, container, true);
 
         return rootView;
     }
@@ -108,4 +108,6 @@ public class LoginFragment extends DialogFragment {
             dismiss();
         }
     }
+
+
 }

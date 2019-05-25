@@ -22,7 +22,15 @@
         <activity
             android:name=".activity.UserPackageActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name=".activity.UserPackageActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.PackageDetailActivity"
             android:label="@string/app_name"
@@ -37,7 +45,6 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

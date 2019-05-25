@@ -38,7 +38,7 @@ public class cart_packages_adapter extends ArrayAdapter<PackageModel> {
         TextView deleteText = (TextView) rowView.findViewById(R.id.tv_Delete);
         final com.androidnetworking.widget.ANImageView package_image = rowView.findViewById(R.id.package_image);
 
-        final String URL_IMAGE = "http://testclub.ir/showmenupic.ashx?id=25";
+        final String URL_IMAGE =  this.context.getString(R.string.pic_url)+"/DownloadPackage/"+_Data.get(position).PackageID;
         package_image.setImageUrl(URL_IMAGE);
 
         Typeface titletypeface = Typeface.createFromAsset(context.getAssets(), "fonts/Vazir-Light-FD.otf");
