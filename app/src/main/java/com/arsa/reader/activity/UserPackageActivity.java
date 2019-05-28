@@ -42,38 +42,21 @@ public class UserPackageActivity extends BaseActivity implements VerifyFragment.
     ListView list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_user_package);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        super.onCreate(savedInstanceState);
         list = findViewById(R.id.lv_package);
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-
         List_fill();
-        FloatingActionButton fab = findViewById(R.id.fab);
 
-        fab.setOnClickListener(new OnClickMaker(this));
     }
 
     public void List_fill() {
         preferences p = new preferences(this);
 
-
         String cellPhone = p.getstring("Phone");
         String token = p.getstring("Key");
         String serialNo = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-        if (token == null || cellPhone == null) {
+        if (!isLogin()) {
             LoginFragment dialogFragment = new LoginFragment();
             Bundle bundle = new Bundle();
             bundle.putBoolean("notAlertDialog", true);
@@ -128,6 +111,7 @@ public class UserPackageActivity extends BaseActivity implements VerifyFragment.
 
                                 db.execSQL("insert into Package(PackageID,PackageTitle) values('"+item.PackageID+"','"+item.PackageTitle+"')");
                             }
+                            db.close();
                         LoadOffline();
                     }
 
@@ -139,8 +123,6 @@ public class UserPackageActivity extends BaseActivity implements VerifyFragment.
 
                 });
         LoadOffline();
-
-
     }
     private  void LoadOffline()
     {
@@ -169,6 +151,7 @@ public class UserPackageActivity extends BaseActivity implements VerifyFragment.
                 }
             });
         }
+        db.close();
     }
 
     @Override
@@ -182,9 +165,15 @@ public class UserPackageActivity extends BaseActivity implements VerifyFragment.
         String cellPhone = p.getstring("Phone");
         String token = p.getstring("Key");
         String serialNo = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-        if (token != null && cellPhone != null)
+        if (isLogin())
         {
             LoadList(cellPhone, token, serialNo);
         }
+        else
+        {
+            Intent myIntent = new Intent(UserPackageActivity.this, MainActivity.class);
+            UserPackageActivity.this.startActivity(myIntent);
+        }
+        super.onFragmentClose();
     }
 }

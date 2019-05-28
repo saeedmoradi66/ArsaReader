@@ -48,30 +48,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 
-public class ProfileActivity extends BaseActivity {
+public class ProfileActivity extends BaseActivity implements VerifyFragment.OnFragmentCloseListener {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_profile);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        super.onCreate(savedInstanceState);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-
-       FloatingActionButton fab = findViewById(R.id.fab);
-
-       fab.setOnClickListener(new OnClickMaker(this));
 
         GetData();
 
@@ -107,17 +92,9 @@ public class ProfileActivity extends BaseActivity {
                                 }
                                 else if (response.StatusCode.equals("401"))
                                 {
-                                    LoginFragment dialogFragment = new LoginFragment();
-                                    Bundle bundle = new Bundle();
-                                    bundle.putBoolean("notAlertDialog", true);
-                                    dialogFragment.setArguments(bundle);
-                                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                                    Fragment prev = getSupportFragmentManager().findFragmentByTag("LoginDialog");
-                                    if (prev != null) {
-                                        ft.remove(prev);
-                                    }
-                                    ft.addToBackStack(null);
-                                    dialogFragment.show(ft, "LoginDialog");
+                                    signOut();
+                                    Toast.makeText(ProfileActivity.this,"ابتدا وارد سیستم شوید.", Toast.LENGTH_LONG).show();
+                                    finish();
                                 }
                                 }
                             @Override
@@ -140,12 +117,7 @@ public class ProfileActivity extends BaseActivity {
             super.onBackPressed();
         }
     }
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.cart).setVisible(false);
-        super.onPrepareOptionsMenu(menu);
-        return false;
-    }
+
 
     public void GetData() {
         UserModel user = new UserModel();
@@ -161,28 +133,49 @@ public class ProfileActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(UserModel response) {
-                        TextView TvCellPhone = findViewById(R.id.txtCellPhone);
-                        EditText txtName = findViewById(R.id.tv_Name);
-                        Button btnSave = findViewById(R.id.btnSave);
-                        Typeface titletypeface = Typeface.createFromAsset(getAssets(), "fonts/Vazir-Light-FD.otf");
-                        txtName.setTypeface(titletypeface);
-                        TvCellPhone.setTypeface(titletypeface);
-                        btnSave.setTypeface(titletypeface);
-                        if(!response.Name.equals(response.CellPhone))
+                        if(response==null)
                         {
-                            txtName.setText(response.Name);
+                            signOut();
+                            Toast.makeText(ProfileActivity.this,"ابتدا وارد سیستم شوید.", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                        else
+                        {
+                            TextView TvCellPhone = findViewById(R.id.txtCellPhone);
+                            EditText txtName = findViewById(R.id.tv_Name);
+                            Button btnSave = findViewById(R.id.btnSave);
+                            Typeface titletypeface = Typeface.createFromAsset(getAssets(), "fonts/Vazir-Light-FD.otf");
+                            txtName.setTypeface(titletypeface);
+                            TvCellPhone.setTypeface(titletypeface);
+                            btnSave.setTypeface(titletypeface);
+                            if(!response.Name.equals(response.CellPhone))
+                            {
+                                txtName.setText(response.Name);
+                            }
+                            TvCellPhone.setText(response.CellPhone);
                         }
 
-                        TvCellPhone.setText(response.CellPhone);
                     }
-
                     @Override
                     public void onError(ANError anError) {
 
                     }
+
                 });
 
 
+    }
+    @Override
+    public void onFragmentClose() {
+        GetData();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        menu.findItem(R.id.cart).setVisible(false);
+        super.onPrepareOptionsMenu(menu);
+        return false;
     }
 
 }

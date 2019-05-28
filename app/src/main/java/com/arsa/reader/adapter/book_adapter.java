@@ -98,7 +98,7 @@ public class book_adapter extends ArrayAdapter<BookModel> {
         preferences p = new preferences(context);
         String token = p.getstring("Key");
         String serialNo = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        final String Url = "http://admin.rahmanitech.ir/ebook/downloadbook?id=" + _Data.get(position).BookID + "&token=" + token + "&serialNo=" + serialNo;
+        final String Url = "http://arsaapub.ir/download/downloadbook?id=" + _Data.get(position).BookID + "&token=" + token + "&serialNo=" + serialNo;
         File rootDataDir = context.getFilesDir();
         //final String dirPath=rootDataDir.toString()+"/ebooks";
         final File dirPath = new File(context.getFilesDir()+File.separator+"ebooks");
@@ -121,7 +121,7 @@ public class book_adapter extends ArrayAdapter<BookModel> {
             public void onClick(View v) {
 
                 AndroidNetworking.download(Url, dirPath.toString(), Integer.toString(_Data.get(position).BookID)+".epub")
-                        .setTag("downloadTest")
+                        .setTag("download")
                         .setPriority(Priority.MEDIUM)
                         .build()
                         .setDownloadProgressListener(new DownloadProgressListener() {

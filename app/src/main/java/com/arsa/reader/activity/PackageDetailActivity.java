@@ -55,18 +55,9 @@ import androidx.viewpager.widget.ViewPager;
 public class PackageDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_package_detail);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        setContentView(R.layout.activity_package_detail);
+        super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
         GetData(Integer.parseInt(intent.getStringExtra("packageID")));
@@ -75,12 +66,7 @@ public class PackageDetailActivity extends BaseActivity {
         CommentBtn(Integer.parseInt(intent.getStringExtra("packageID")));
         BuyBtn(Integer.parseInt(intent.getStringExtra("packageID")));
         ShowBooks(Integer.parseInt(intent.getStringExtra("packageID")));
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-
-        fab.setOnClickListener(new OnClickMaker(this));
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -132,7 +118,7 @@ public class PackageDetailActivity extends BaseActivity {
                         titleText.setText(packagedetail.PackageTitle);
 
                         final com.androidnetworking.widget.ANImageView package_image = findViewById(R.id.package_image);
-                        final String URL_IMAGE = "http://testclub.ir/showmenupic.ashx?id=25";
+                        final String URL_IMAGE = getString(R.string.pic_url)+"/DownloadPackage/"+packagedetail.PackageID;
                         package_image.setImageUrl(URL_IMAGE);
 
                         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
@@ -144,6 +130,7 @@ public class PackageDetailActivity extends BaseActivity {
                         priceText.setText(packagedetail.Price + " ریال ");
 
                         TextView descriptionText = (TextView) findViewById(R.id.tv_description);
+                        if(descriptionText!=null)
                         descriptionText.setText(HtmlCompat.fromHtml(packagedetail.Description, 0));
                         final Button btnBuy = findViewById(R.id.btnBuy);
                         final Button btnShowBooks = findViewById(R.id.btnViewBooks);

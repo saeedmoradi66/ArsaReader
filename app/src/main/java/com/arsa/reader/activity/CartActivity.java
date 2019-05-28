@@ -2,6 +2,8 @@ package com.arsa.reader.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -27,9 +30,11 @@ import com.arsa.reader.common.preferences;
 import com.arsa.reader.common.util;
 import com.arsa.reader.fragment.LoginFragment;
 import com.arsa.reader.model.PackageModel;
+import com.arsa.reader.model.UserModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -47,21 +52,11 @@ public class CartActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_cart);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        super.onCreate(savedInstanceState);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         TextView priceText = findViewById(R.id.tv_TotalPrice);
         Button btnPayment = findViewById(R.id.btnPayment);
@@ -93,15 +88,12 @@ public class CartActivity extends BaseActivity {
 
 
                 } else {
-
-                    SetFactor(token,serialNo);
+                    List<PackageModel> userPackages= GetUserPackages(cellPhone,token,serialNo);
+                    SetFactor(token,serialNo,userPackages);
                 }
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-
-        fab.setOnClickListener(new OnClickMaker(this));
     }
 
     public void List_fill() {
@@ -154,7 +146,7 @@ public class CartActivity extends BaseActivity {
 
     }
 
-    public void SetFactor(String token,String serialNo) {
+    public void SetFactor(String token,String serialNo,List<PackageModel> userPackages) {
         final Activity context = this;
         preferences p = new preferences(this);
         Set<String> set = p.getstringset("Cart");
@@ -162,10 +154,16 @@ public class CartActivity extends BaseActivity {
             if (set.size() > 0) {
                 String IDs = "";
                 for (String s : set) {
+                    for(PackageModel obj : userPackages) {
+                        if(String.valueOf(obj.PackageID).equals(s)) {
+                            Toast.makeText(CartActivity.this,String.valueOf(obj.PackageTitle)+" قبلا خریداری شده است", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    }
                     IDs += s;
                     IDs += "$";
                 }
-                IDs += IDs.substring(0, IDs.length() - 1);
+                IDs = IDs.substring(0, IDs.length() - 1);
 
                 AndroidNetworking.get(getString(R.string.server_url) + "/Factor/Generate/{id}/{token}/{serialNo}")
                         .addPathParameter("id", String.valueOf(IDs))
@@ -178,7 +176,9 @@ public class CartActivity extends BaseActivity {
 
                             @Override
                             public void onResponse(Integer response) {
-                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://payment.rahmanitech.ir/home/Index?factorid="+response.toString()));
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://payment.arsaapub.ir/home/Index?factorid="+response.toString()));
+                                preferences p = new preferences(CartActivity.this);
+                                p.delete_key("Cart");
                                 startActivity(browserIntent);
                             }
 
@@ -201,13 +201,6 @@ public class CartActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.cart).setVisible(false);
-        super.onPrepareOptionsMenu(menu);
-        return false;
-    }
-
     public void SetPrice(int value) {
         TextView tv_Total = findViewById(R.id.tv_TotalPrice);
         Typeface pricetypeface = Typeface.createFromAsset(this.getAssets(), "fonts/Vazir-Light-FD.otf");
@@ -218,5 +211,48 @@ public class CartActivity extends BaseActivity {
             btnPayment.setVisibility(View.VISIBLE);
         }
     }
+    public List<PackageModel> GetUserPackages(String cellPhone, String token, String serialNo) {
+        UserModel user = new UserModel();
+        user.CellPhone = cellPhone;
+        user.Token = token;
+        user.SerialNo = serialNo;
 
+        AndroidNetworking.post(getString(R.string.server_url) + "/Package/GetUserPackages")
+                .addBodyParameter(user)
+                .setTag("test")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsObjectList(PackageModel.class, new ParsedRequestListener<List<PackageModel>>() {
+                    @Override
+                    public void onResponse(final List<PackageModel> packagelist) {
+
+
+                        SQLiteDatabase db=openOrCreateDatabase("Arsaa", MODE_PRIVATE,null);
+                        db.execSQL("delete from Package");
+                        for (PackageModel item : packagelist) {
+
+                            db.execSQL("insert into Package(PackageID,PackageTitle) values('"+item.PackageID+"','"+item.PackageTitle+"')");
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+
+                    }
+
+                });
+        SQLiteDatabase db=openOrCreateDatabase("Arsaa", MODE_PRIVATE,null);
+        Cursor crs=db.rawQuery("select * from Package", null);
+        final List<PackageModel> packagelist=new ArrayList<PackageModel>();
+        while(crs.moveToNext())
+        {
+            PackageModel model=new PackageModel();
+            model.PackageID=crs.getInt(crs.getColumnIndex("PackageID"));
+            model.PackageTitle=crs.getString(crs.getColumnIndex("PackageTitle"));
+            packagelist.add(model);
+        }
+        return packagelist;
+    }
 }

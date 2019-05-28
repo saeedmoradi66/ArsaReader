@@ -5,13 +5,23 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="صفحه اصلی" />
+        <item
             android:id="@+id/nav_account"
             android:icon="@drawable/ic_account_box_black_24dp"
             android:title="حساب کاربری" />
         <item
             android:id="@+id/nav_signout"
             android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:visible="false"
             android:title="خروج" />
+        <item
+            android:id="@+id/nav_signin"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:visible="false"
+            android:title="ورود" />
     </group>
 
 

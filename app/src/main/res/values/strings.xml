@@ -6,7 +6,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="server_url">http://api.rahmanitech.ir/api</string>
-    <string name="pic_url">http://admin.rahmanitech.ir/download</string>
+    <string name="server_url">http://api.arsaapub.ir/api</string>
+    <string name="pic_url">http://arsaapub.ir/download</string>
     <string name="title_activity_saeed">SaeedActivity</string>
 </resources>

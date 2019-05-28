@@ -1,5 +1,6 @@
 package com.arsa.reader.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -73,6 +74,8 @@ public class VerifyFragment extends DialogFragment {
                 UserModel user = new UserModel();
                 user.Code = Code.getText().toString();
                 user.SerialNo = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+                preferences p =new preferences(getActivity());
+                user.CellPhone=p.getstring("Phone");
 
                 AndroidNetworking.post(getString(R.string.server_url) + "/User/VerifyCode")
                         .addBodyParameter(user)
@@ -92,7 +95,10 @@ public class VerifyFragment extends DialogFragment {
                                 {
                                     preferences p =new preferences(getActivity());
                                     p.setstring("Key",response.Token);
-                                    mCallback.onFragmentClose();
+                                    if(mCallback!=null)
+                                    {
+                                        mCallback.onFragmentClose();
+                                    }
                                     dismiss();
                                 }
                             }
@@ -108,5 +114,18 @@ public class VerifyFragment extends DialogFragment {
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mCallback!=null)
+        {
+            mCallback.onFragmentClose();
+        }
+    }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+
+    }
 }

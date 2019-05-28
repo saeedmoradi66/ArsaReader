@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,10 +40,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 public class LoginFragment extends DialogFragment {
-    
+    public VerifyFragment.OnFragmentCloseListener mCallback;
+
+    public interface OnFragmentCloseListener {
+        void onFragmentClose();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.login_dialog, container, true);
+        try {
+            mCallback = (VerifyFragment.OnFragmentCloseListener) getActivity();
+        } catch (Exception e) {
+            Log.d("error", e.getMessage());
+        }
 
         return rootView;
     }
@@ -108,6 +118,13 @@ public class LoginFragment extends DialogFragment {
             dismiss();
         }
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mCallback!=null)
+        {
+            mCallback.onFragmentClose();
+        }
+    }
 
 }
