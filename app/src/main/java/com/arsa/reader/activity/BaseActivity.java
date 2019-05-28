@@ -63,7 +63,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        fab.setOnClickListener(new OnClickMaker(this));
+        if(fab!=null)
+        {
+            fab.setOnClickListener(new OnClickMaker(this));
+        }
         refreshNavigation();
 
     }
